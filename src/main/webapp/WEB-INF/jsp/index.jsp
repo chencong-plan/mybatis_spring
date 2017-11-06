@@ -15,7 +15,6 @@
 <body>
 <p>Hello World</p>
 
-<% Date date = new Date(); %>
-时间： <fmt:formatDate value="<%=date%>" pattern="yyyy-MM-dd HH:mm:ss"/>
+时间： <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>
 </body>
 </html>
