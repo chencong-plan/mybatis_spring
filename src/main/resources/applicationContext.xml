@@ -24,4 +24,28 @@
         <property name="password" value="123456"/>
     </bean>
 
+    <!--在Mybatis-Spring当中，sqlSessionFactory就是用于创建SQLSessionFactory的，因此在Spring的配置文件当中添加这个工厂类的配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--用于配置Mybatis的配置xml文件的位置，对于Mybatis的各种配置都可以使用这种方式进行配置，同时配置Mybatis的Setting时候只能够使用这种方式-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--用于配置数据源 必选，必须通过这个属性进行配置数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置sqlSessionFactoryBean扫描XML映射文件的路径-->
+        <property name="mapperLocations">
+            <array>
+                <!--这里使用通配的方式 使用array属性-->
+                <value>classpath:mapper/*.xml</value>
+            </array>
+        </property>
+        <!--配置包中类的别名，配置之后包中类在XML的映射文件当中使用时候可以使用省略包名的部分，直接使用类名，当需要配置多个包名时候需要使用逗号进行隔开-->
+        <property name="typeAliasesPackage" value="cc.ccoder.web.model"/>
+    </bean>
+
+    <!--在以往的项目当中，可能会许多直接使用sqlSession的代码。-->
+    <!--在这里使用MapperScannerConfigurer 类自动扫描所有的Mapper接口，使用时候可以直接注入接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cc.ccoder.**.mapper"/>
+    </bean>
+    <!--annotationClass 用于过滤被扫描的接口，如果设置了该属性，那么Mybatis的接口只有包含了该注解才会被包含进去-->
+
 </beans>
